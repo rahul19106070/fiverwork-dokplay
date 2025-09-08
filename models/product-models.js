@@ -149,6 +149,10 @@ const productSchema = new mongoose.Schema(
       required: [true, "Product quantity is required"],
       min: [0, "Quantity cannot be negative"],
     },
+    minStock: {
+      type: Number,
+      min: [0, "Minimun stock cannot be negative"],
+    },
     isActive: {
       type: Boolean,
       required: false,

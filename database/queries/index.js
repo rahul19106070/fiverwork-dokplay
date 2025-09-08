@@ -1325,6 +1325,41 @@ export async function getTopSellingProducts() {
   }
 }
 
+export async function getToRefillProducts() {
+  try {
+    await dbConnect();
+    // Get all manufacturers for id-name mapping
+    const manufacturers = await manufacturerModel.find().lean();
+    const manufacturerMap = {};
+    manufacturers.forEach(m => {
+      manufacturerMap[m._id.toString()] = m.name;
+    });
+
+    const refillProducts = await productModel
+      .find({ $expr: { $lt: ["$quantity", "$minStock"] } })
+      .select("name quantity minStock manufacturerId")
+      .lean();
+
+    let products = refillProducts.map((product) => ({
+      name: product.name,
+      manufacturerName: product.manufacturerId ? manufacturerMap[product.manufacturerId.toString()] || '-' : '-',
+      quantity: product.quantity,
+      minStock: product.minStock,
+      id: product._id
+    }));
+    // Sort by manufacturerName (case-insensitive), '-' (missing) comes last
+    products = products.sort((a, b) => {
+      if (a.manufacturerName === '-' && b.manufacturerName !== '-') return 1;
+      if (a.manufacturerName !== '-' && b.manufacturerName === '-') return -1;
+      return a.manufacturerName.localeCompare(b.manufacturerName, undefined, { sensitivity: 'base' });
+    });
+    return replaceMongoIdInArray(products);
+  } catch (error) {
+    console.error("Error fetching top selling products:", error);
+    throw error;
+  }
+}
+
 export async function getTotalCarts() {
   try {
     await dbConnect();
@@ -1407,6 +1442,7 @@ export async function createProduct(data) {
       "priceEUR",
       "description",
       "quantity",
+      "minStock"
     ];
     const missingFields = requiredFields.filter((field) => !data[field]);
     if (missingFields.length > 0) {
@@ -1424,6 +1460,7 @@ export async function createProduct(data) {
       "discountUSD",
       "discountEUR",
       "quantity",
+      "minStock"
     ];
     for (const field of numericFields) {
       const value = data[field];
@@ -1465,6 +1502,7 @@ export async function createProduct(data) {
       descriptionEs: data.descriptionEs.trim(),
       isActive: data?.visibility === "public" ? true : false,
       quantity: parseInt(data.quantity),
+      minStock: parseInt(data.minStock),
       shippingEu: data.shippingEu || 0,
       shippingAsia: data.shippingAsia || 0,
       shippingPt: data.shippingPt || 0,
@@ -1574,6 +1612,7 @@ export async function updateProduct(productId, data) {
       "priceEUR",
       "description",
       "quantity",
+      "minStock"
     ];
     const missingFields = requiredFields.filter((field) => !data[field]);
 
@@ -1594,6 +1633,7 @@ export async function updateProduct(productId, data) {
       "reviewsNumber",
       "ratings",
       "quantity",
+      "minStock"
     ];
 
     for (const field of numericFields) {
@@ -1639,6 +1679,7 @@ export async function updateProduct(productId, data) {
       descriptionEs: data.descriptionEs.trim(),
       isActive: data?.visibility === "public" ? true : false,
       quantity: parseInt(data.quantity),
+      minStock: parseInt(data.minStock),
       shippingEu: data.shippingEu || 0,
       shippingAsia: data.shippingAsia || 0,
       shippingPt: data.shippingPt || 0,
@@ -1752,6 +1793,7 @@ export async function getPaginatedProducts({
       categoryId: 1,
       price: 1,
       isActive: 1,
+      minStock: 1,
       createdAt: 1,
       _id: 1,
       sku: 1,
@@ -1814,6 +1856,7 @@ export async function getPaginatedProducts({
         name: product.name,
         image: product.image,
         quantity: product.quantity,
+        minStock: product.minStock,
         price: product.price,
         isActive: product.isActive,
         createdAt: product.createdAt,

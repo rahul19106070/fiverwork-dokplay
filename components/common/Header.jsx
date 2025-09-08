@@ -15,6 +15,7 @@ import {
 } from "@/public/icons/icons";
 import { useCart } from "@/providers/CartContext";
 import { useDomain } from "@/providers/useDomain";
+import logo from "@/public/client/logo.png";
 
 export default function Header() {
   const pathname = usePathname();
@@ -122,72 +123,56 @@ export default function Header() {
     <div className="bg-white">
       {/* Main Header */}
       <header className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex items-center justify-between h-16 py-2">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              {/* HDO Logo Circle - Exact match to the gold logo */}
-              <div className="relative w-16 h-16 rounded-full overflow-hidden shadow-md">
-                {/* Gold gradient background with metallic effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-yellow-200 via-yellow-300 to-yellow-600 rounded-full"></div>
-                {/* Dark border for definition */}
-                <div className="absolute inset-0 border-2 border-yellow-800 rounded-full"></div>
-                {/* Inner shadow for 3D embossed effect */}
-                <div className="absolute inset-0 rounded-full shadow-inner opacity-30"></div>
-                {/* Highlight for metallic shine */}
-                <div className="absolute top-1 left-1 right-1 h-8 bg-gradient-to-b from-white/20 to-transparent rounded-full"></div>
-                
-                                  {/* Logo content */}
-                  <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-1">
-                    {/* HDO - Large, bold, dark text */}
-                    <div className="text-yellow-900 font-black text-lg leading-none mb-0.5 drop-shadow-sm">
-                      HDO
-                    </div>
-                    {/* Global Trade - Medium size */}
-                    <div className="text-yellow-900 font-semibold text-xs leading-tight mb-0.5">
-                      Global Trade
-                    </div>
-                    {/* Tagline - Small, thin */}
-                    <div className="text-yellow-800 font-light text-[8px] leading-tight mb-0.5">
-                      YOUR SPARE PARTS PARTNER
-                    </div>
-                    {/* Handshake icon */}
-                    <div className="text-yellow-800 text-xs">🤝</div>
-                  </div>
-              </div>
+              <Image
+                src={logo}
+                alt="HDO Logo"
+                width={150}
+                height={150}
+                priority
+                className="relative z-10 flex items-center justify-center h-[90px] w-[120px] object-contain p-0 m-0"
+                style={{ minWidth: 140, minHeight: 140 }}
+              />
             </Link>
 
             {/* Navigation Links - Exact styling match */}
             <nav className="hidden lg:flex items-center space-x-6">
               <Link
                 href="/"
-                className={`text-gray-800 hover:text-[#fd3d57] transition-colors duration-200 text-sm font-medium ${
-                  isActiveLink("/") ? "text-[#fd3d57] font-semibold" : ""
+                className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${
+                  isActiveLink("/") ? "text-[#fd3d57]" : ""
                 }`}
+                style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}
               >
                 {getText("home")}
               </Link>
               <Link
                 href="/shop"
-                className={`text-gray-800 hover:text-[#fd3d57] transition-colors duration-200 text-sm font-medium ${
-                  isActiveLink("/shop") ? "text-[#fd3d57] font-semibold" : ""
+                className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${
+                  isActiveLink("/shop") ? "text-[#fd3d57]" : ""
                 }`}
+                style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}
               >
                 {getText("store")}
               </Link>
               <Link
                 href="/about"
-                className={`text-gray-800 hover:text-[#fd3d57] transition-colors duration-200 text-sm font-medium ${
-                  isActiveLink("/about") ? "text-[#fd3d57] font-semibold" : ""
+                className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${
+                  isActiveLink("/about") ? "text-[#fd3d57]" : ""
                 }`}
+                style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}
               >
                 {getText("aboutUs")}
               </Link>
               <Link
                 href="/contact"
-                className={`text-gray-800 hover:text-[#fd3d57] transition-colors duration-200 text-sm font-medium ${
-                  isActiveLink("/contact") ? "text-[#fd3d57] font-semibold" : ""
+                className={`text-gray-500 hover:text-[#fd3d57] hover:underline transition-colors duration-200 font-medium ${
+                  isActiveLink("/contact") ? "text-[#fd3d57]" : ""
                 }`}
+                style={{ fontSize: "18px", fontFamily: "Lato, sans-serif" }}
               >
                 {getText("contactUs")}
               </Link>
@@ -195,18 +180,20 @@ export default function Header() {
 
             {/* Search Bar - Exact match to hdotrade.com */}
             <div className="hidden lg:flex items-center space-x-4">
-              <div className="relative">
+              <div className="flex w-[400px] h-16">
                 <input
                   type="text"
                   placeholder="Search..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  className="w-56 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-[#fd3d57] focus:border-[#fd3d57] text-sm"
+                  className="flex-1 h-full pl-6 pr-4 border border-gray-300 rounded-l-2xl rounded-r-none text-base text-black focus:outline-none focus:ring-0 focus:border-gray-300"
+                  style={{ height: '56px', borderRight: 'none', borderTopRightRadius: 0, borderBottomRightRadius: 0, fontSize: "12px"}}
                 />
-                <button 
+                <button
                   onClick={handleSearch}
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-[#fd3d57] text-white px-3 py-1 rounded text-sm hover:bg-[#e02d47] transition-colors"
+                  className="px-5 bg-[#e91325] text-white rounded-r-2xl rounded-l-none text-base font-normal hover:bg-[#e02d47] transition-colors border border-gray-300 border-l-0"
+                  style={{ height: '56px', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
                 >
                   {getText("search")}
                 </button>

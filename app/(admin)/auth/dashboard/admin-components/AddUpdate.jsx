@@ -35,6 +35,7 @@ export default function AddUpdate({ updateId = false }) {
     sizes: [],
     colors: [],
     quantity: "",
+    minStock: "",
     visibility: "public",
     shippingEu: "",
     shippingAsia: "",
@@ -176,6 +177,7 @@ export default function AddUpdate({ updateId = false }) {
             sizes: product.sizes || [],
             colors: product.colors || [],
             quantity: product.quantity?.toString() || "0",
+            minStock: product.minStock?.toString() || "0",
             visibility: product.visibility || "public",
             features: product.features || [],
             sku: product.sku || "",
@@ -627,6 +629,19 @@ export default function AddUpdate({ updateId = false }) {
               name="sku"
               required
               value={form.sku}
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label>Min Stock</Label>
+            <input
+              type="number"
+              name="minStock"
+              value={form.minStock}
               onChange={handleChange}
               className="w-full border p-2 rounded"
             />

@@ -124,14 +124,15 @@ export default function FilterCWrapper() {
   };
 
   return (
-    <div className="w-full max-w-[1279px] mx-auto flex justify-center items-center py-[50px] bg-[#ffffff]">
-      <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-4 border border-[#00000033] rounded-[15px] lg:rounded-[35px] p-4 bg-white">
+  <div className="w-full max-w-[1279px] mx-auto flex justify-center items-center pt-[10px] pb-[50px] bg-[#ffffff]">
+      <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-4  lg:rounded-[35px] p-4 bg-white">
         {/* Manufacturer Select */}
         <select
           name="manufacturer"
           value={filters.manufacturer}
           onChange={handleFilterChange}
-          className="border border-[#00000033] px-4 lg:px-6 py-2 text-[14px] rounded-[72px] focus:outline-none focus:border-gray-500 w-full lg:flex-1"
+          className="border border-[#00000033] px-4 lg:px-6 py-2 text-[16px] rounded-[20px] focus:outline-none focus:border-[#1e40af] w-full lg:flex-1 font-sans bg-white text-[#1e3a5c] placeholder-[#1e3a5c]"
+          style={{ minHeight: '62px', fontWeight: 400, letterSpacing: '0.5px', boxShadow: '0 2px 8px #00000010' }}
         >
           <option value="">{getText("selectManufacturer")}</option>
           {manufacturers.map((manufacturer) => (
@@ -145,7 +146,8 @@ export default function FilterCWrapper() {
           name="category"
           value={filters.category}
           onChange={handleFilterChange}
-          className="border border-[#00000033] px-4 lg:px-6 py-2 text-[14px] rounded-[35px] focus:outline-none focus:border-gray-500 w-full lg:flex-1"
+          className="border border-[#00000033] px-4 lg:px-6 py-2 text-[14px] rounded-[20px] focus:outline-blue focus:border-gray-500 w-full lg:flex-1"
+          style={{ minHeight: '62px' }}
         >
           <option value="">{getText("selectCategory")}</option>
           {categories.map((category) => (
@@ -159,8 +161,9 @@ export default function FilterCWrapper() {
           name="subcategory"
           value={filters.subcategory}
           onChange={handleFilterChange}
-          className="border border-[#00000033] px-4 lg:px-6 py-2 text-[14px] rounded-[35px] focus:outline-none focus:border-gray-500 w-full lg:flex-1"
+          className="border border-[#00000033] px-4 lg:px-6 py-2 text-[14px] rounded-[20px] focus:outline-blue focus:border-gray-500 w-full lg:flex-1"
           disabled={!subcategories.length}
+          style={{ minHeight: '62px' }}
         >
           <option value="">
             {subcategories.length
@@ -177,7 +180,8 @@ export default function FilterCWrapper() {
         <button
           type="button"
           onClick={handleSearch}
-          className="bg-transparent border border-red-500 px-8 py-2 text-base lg:text-md rounded-[35px] hover:bg-red-500 text-red-500 hover:text-white transition-colors w-full lg:w-40"
+          className="bg-[#e91325] px-4 py-2 text-base lg:text-md rounded-[20px] text-white font-bold transition-colors w-full lg:w-32 border-0 hover:bg-[#d10f1f] active:bg-[#d10f1f] focus:bg-[#d10f1f] focus:outline-none"
+          style={{ minHeight: '62px' }}
         >
           {getText("search")}
         </button>

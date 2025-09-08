@@ -640,6 +640,7 @@ export default function AllProducts() {
                 {/* <th className="px-4 py-3 border">Price (USD)</th> */}
                 <th className="px-4 py-3 border">Price (EUR)</th>
                 <th className="px-4 py-3 border">Stock</th>
+                <th className="px-4 py-3 border">Min Stock</th>
                 <th className="px-4 py-3 border">Category</th>
                 <th className="px-4 py-3 border text-center">Actions</th>
               </tr>
@@ -685,7 +686,7 @@ export default function AllProducts() {
                           product?.isActive
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
-                        }`}
+                          }`}
                       >
                         {product?.isActive ? "Public" : "Private"}
                       </span>
@@ -708,11 +709,16 @@ export default function AllProducts() {
                           product?.quantity > 10
                             ? "bg-green-100 text-green-800"
                             : product?.quantity > 0
-                            ? "bg-yellow-100 text-yellow-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
+                              ? "bg-yellow-100 text-yellow-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
                       >
                         {product?.quantity || 0}
+                      </span>
+                    </td>
+                    <td className="px-4 py-2 border">
+                      <span>
+                        {product?.minStock || 0}
                       </span>
                     </td>
                     <td className="px-4 py-2 border">
